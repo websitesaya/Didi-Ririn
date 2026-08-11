@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>The Wedding of Didi & Ririn</title>
+<meta name="description" content="Undangan Pernikahan Digital Didi Sahkandi & Ririn Noviani">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Alex+Brush&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ SNOW / FLORAL FALL CANVAS ============ -->
+<canvas id="snowCanvas"></canvas>
+
+<!-- ============ AUDIO PLAYER ============ -->
+<audio id="bgMusic" loop preload="none">
+  <source src="Bruno_Mars.mp3" type="audio/mpeg">
+</audio>
+<button id="musicToggle" class="music-toggle" aria-label="Putar musik">
+  <i class="fa-solid fa-compact-disc"></i>
+</button>
+
+<!-- ============ COVER / OPENING SCREEN ============ -->
+<section id="cover" class="cover">
+  <div class="cover-bg">
+    <img src="Latar.jpg" alt="Didi & Ririn" class="cover-photo" id="coverPhoto">
+    <div class="cover-shade"></div>
+  </div>
+
+  <div class="cover-frame">
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+  </div>
+
+  <div class="cover-content">
+    <p class="cover-eyebrow fade-in-up d1">The Wedding Of</p>
+    <h1 class="cover-names fade-in-up d2">Didi <span class="amp">&amp;</span> Ririn</h1>
+    <div class="cover-divider fade-in-up d3"><span></span><i class="fa-solid fa-gem"></i><span></span></div>
+    <p class="cover-date fade-in-up d4">29 . 11 . 2026</p>
+
+    <div class="cover-guest fade-in-up d5">
+      <p>Kepada Yth. Bapak/Ibu/Saudara/i</p>
+      <h3 id="guestName">Tamu Undangan</h3>
+    </div>
+
+    <button id="openBtn" class="open-btn fade-in-up d6">
+      <i class="fa-solid fa-envelope-open-text"></i>
+      <span>Buka Undangan</span>
+    </button>
+  </div>
+</section>
+
+<!-- ============ CURTAIN OVERLAY ============ -->
+<div id="curtain" class="curtain">
+  <div class="curtain-panel left">
+    <div class="curtain-fold"></div>
+    <div class="curtain-tassel"></div>
+  </div>
+  <div class="curtain-panel right">
+    <div class="curtain-fold"></div>
+    <div class="curtain-tassel"></div>
+  </div>
+  <div class="curtain-emblem"><i class="fa-solid fa-gem"></i></div>
+</div>
+
+<!-- ============ MAIN CONTENT ============ -->
+<main id="mainContent" class="main-content">
+
+  <!-- ===== HERO / PEMBUKA ===== -->
+  <section class="section hero-section" data-theme="black" data-reveal>
+    <div class="section-frame"><span class="sec-corner tl"></span><span class="sec-corner tr"></span><span class="sec-corner bl"></span><span class="sec-corner br"></span></div>
+    <div class="ornament-top"><i class="fa-solid fa-gem"></i></div>
+    <p class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+    <p class="hero-quote">
+      "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu
+      pasangan hidup dari jenismu sendiri, supaya kamu cenderung dan merasa
+      tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang."
+    </p>
+    <p class="hero-source">QS. Ar-Rum : 21</p>
+    <div class="hero-invite">
+      <p>Dengan penuh syukur kepada Allah SWT, kami bermaksud menyelenggarakan
+      pernikahan putra putri kami, dan mengundang Bapak/Ibu/Saudara/i untuk
+      hadir memberikan doa restu.</p>
+    </div>
+  </section>
+
+  <!-- ===== MEMPELAI ===== -->
+  <section class="section couple-section" data-theme="maroon" data-reveal>
+    <div class="section-frame"><span class="sec-corner tl"></span><span class="sec-corner tr"></span><span class="sec-corner bl"></span><span class="sec-corner br"></span></div>
+    <p class="section-eyebrow">Kedua Mempelai</p>
+    <h2 class="section-title">Mempelai</h2>
+    <div class="gold-divider"></div>
+
+    <div class="couple-wrap">
+      <div class="couple-card" data-reveal>
+        <div class="couple-photo-frame">
+          <img src="Mempelai_Pria.jpg" alt="Didi Sahkandi" loading="lazy">
+        </div>
+        <h3 class="couple-name">Didi Sahkandi, S.T</h3>
+        <p class="couple-role">Putra Ketiga dari 3 Bersaudara</p>
+        <div class="couple-info">
+          <p><i class="fa-solid fa-moon"></i> Islam</p>
+          <p><i class="fa-solid fa-person"></i> Ayahanda : Bapak Tarudin</p>
+          <p><i class="fa-solid fa-person-dress"></i> Ibunda : Ibu Asma Wati</p>
+        </div>
+      </div>
+
+      <div class="couple-amp"><i class="fa-solid fa-heart"></i></div>
+
+      <div class="couple-card" data-reveal>
+        <div class="couple-photo-frame">
+          <img src="Mempelai_Wanita.jpg" alt="Ririn Noviani" loading="lazy">
+        </div>
+        <h3 class="couple-name">Ns. Ririn Noviani, S.Kep</h3>
+        <p class="couple-role">Putri Pertama dari 2 Bersaudara</p>
+        <div class="couple-info">
+          <p><i class="fa-solid fa-moon"></i> Islam</p>
+          <p><i class="fa-solid fa-person"></i> Ayahanda : Bapak Ngadi</p>
+          <p><i class="fa-solid fa-person-dress"></i> Ibunda : Ibu Purwanti</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PERJALANAN CINTA ===== -->
+  <section class="section story-section" data-theme="white" data-reveal>
+    <div class="section-frame"><span class="sec-corner tl"></span><span class="sec-corner tr"></span><span class="sec-corner bl"></span><span class="sec-corner br"></span></div>
+    <p class="section-eyebrow">Kisah Kami</p>
+    <h2 class="section-title">Perjalanan Cinta</h2>
+    <div class="gold-divider"></div>
+
+    <div class="timeline">
+      <div class="timeline-item" data-reveal>
+        <div class="timeline-dot"><i class="fa-solid fa-people-arrows"></i></div>
+        <div class="timeline-body">
+          <h4>2013</h4>
+          <p>Berkenalan pada masa perkuliahan, awal dari kisah yang tak pernah disangka akan membawa kami sejauh ini.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-reveal>
+        <div class="timeline-dot"><i class="fa-solid fa-heart"></i></div>
+        <div class="timeline-body">
+          <h4>2013 — 2026</h4>
+          <p>Menjalin hubungan dengan penuh kesetiaan selama 13 tahun, melewati suka dan duka bersama.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-reveal>
+        <div class="timeline-dot"><i class="fa-solid fa-plane"></i></div>
+        <div class="timeline-body">
+          <h4>2022 — 2026</h4>
+          <p>Menjalani hubungan jarak jauh Indonesia — Jepang selama 4 tahun, jarak yang justru semakin menguatkan cinta kami.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-reveal>
+        <div class="timeline-dot"><i class="fa-solid fa-ring"></i></div>
+        <div class="timeline-body">
+          <h4>Februari 2026</h4>
+          <p>Memutuskan untuk serius dan bertunangan di Jepang, sebagai langkah awal menuju kehidupan baru.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-reveal>
+        <div class="timeline-dot"><i class="fa-solid fa-champagne-glasses"></i></div>
+        <div class="timeline-body">
+          <h4>November 2026</h4>
+          <p>Sekembalinya dari Jepang, kami memutuskan untuk melangkah lebih jauh dan menikah.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ACARA / COUNTDOWN ===== -->
+  <section class="section event-section" data-theme="black" data-reveal>
+    <div class="section-frame"><span class="sec-corner tl"></span><span class="sec-corner tr"></span><span class="sec-corner bl"></span><span class="sec-corner br"></span></div>
+    <p class="section-eyebrow">Save The Date</p>
+    <h2 class="section-title">Akad &amp; Resepsi</h2>
+    <div class="gold-divider"></div>
+
+    <div class="countdown-wrap" data-reveal>
+      <p class="countdown-label">Menuju Hari Bahagia</p>
+      <div class="countdown" id="countdown">
+        <div class="cd-box"><span id="cdDays">00</span><small>Hari</small></div>
+        <div class="cd-box"><span id="cdHours">00</span><small>Jam</small></div>
+        <div class="cd-box"><span id="cdMinutes">00</span><small>Menit</small></div>
+        <div class="cd-box"><span id="cdSeconds">00</span><small>Detik</small></div>
+      </div>
+    </div>
+
+    <div class="event-cards">
+      <div class="event-card" data-reveal>
+        <i class="fa-solid fa-mosque event-icon"></i>
+        <h3>Akad Nikah</h3>
+        <p class="event-date">Minggu, 29 November 2026</p>
+        <p class="event-time">08:00 WIB — Selesai</p>
+        <p class="event-place">Rumah Mempelai Wanita</p>
+        <p class="event-address">Jl. Pasar Berdikari, 05/20, Kijang Kota,<br>Bintan Timur, Bintan, Kepri</p>
+        <a href="https://share.google/zqQm43v3kHQ0MY8YW" target="_blank" rel="noopener" class="map-btn">
+          <i class="fa-solid fa-location-dot"></i> Buka Google Maps
+        </a>
+      </div>
+
+      <div class="event-card" data-reveal>
+        <i class="fa-solid fa-champagne-glasses event-icon"></i>
+        <h3>Resepsi</h3>
+        <p class="event-date">Minggu, 29 November 2026</p>
+        <p class="event-time">11:00 WIB — Selesai</p>
+        <p class="event-place">Rumah Mempelai Wanita</p>
+        <p class="event-address">Jl. Pasar Berdikari, 05/20, Kijang Kota,<br>Bintan Timur, Bintan, Kepri</p>
+        <a href="https://share.google/zqQm43v3kHQ0MY8YW" target="_blank" rel="noopener" class="map-btn">
+          <i class="fa-solid fa-location-dot"></i> Buka Google Maps
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GALLERY ===== -->
+  <section class="section gallery-section" data-theme="maroon" data-reveal>
+    <div class="section-frame"><span class="sec-corner tl"></span><span class="sec-corner tr"></span><span class="sec-corner bl"></span><span class="sec-corner br"></span></div>
+    <p class="section-eyebrow">Our Moments</p>
+    <h2 class="section-title">Galeri Prewedding</h2>
+    <div class="gold-divider"></div>
+
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </section>
+
+  <!-- ===== LIGHTBOX ===== -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose"><i class="fa-solid fa-xmark"></i></button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev"><i class="fa-solid fa-chevron-left"></i></button>
+    <img src="" alt="" id="lightboxImg">
+    <button class="lightbox-nav lightbox-next" id="lightboxNext"><i class="fa-solid fa-chevron-right"></i></button>
+  </div>
+
+  <!-- ===== HADIAH / AMPLOP DIGITAL ===== -->
+  <section class="section gift-section" data-theme="white" data-reveal>
+    <div class="section-frame"><span class="sec-corner tl"></span><span class="sec-corner tr"></span><span class="sec-corner bl"></span><span class="sec-corner br"></span></div>
+    <p class="section-eyebrow">Wedding Gift</p>
+    <h2 class="section-title">Tanda Kasih</h2>
+    <div class="gold-divider"></div>
+    <p class="gift-note">
+      Doa restu Bapak/Ibu/Saudara/i merupakan karunia yang sangat berarti bagi kami.
+      Jika berkenan memberi tanda kasih, kami sediakan pilihan berikut tanpa mengurangi rasa hormat kami.
+    </p>
+
+    <div class="atm-wrap">
+      <div class="atm-card" data-reveal>
+        <div class="atm-shine"></div>
+        <div class="atm-top">
+          <span class="atm-bank">BRI</span>
+          <i class="fa-solid fa-wifi atm-wifi"></i>
+        </div>
+        <div class="atm-chip"><i class="fa-solid fa-microchip"></i></div>
+        <div class="atm-number">0410 - 01 - 000980 - 53 - 6</div>
+        <div class="atm-bottom">
+          <div>
+            <p class="atm-label">Card Holder</p>
+            <p class="atm-name">Didi Sahkandi, S.T</p>
+          </div>
+          <i class="fa-brands fa-cc-mastercard atm-logo"></i>
+        </div>
+        <button class="copy-btn" data-copy="0410010009805 36" data-bank="BRI a.n Didi Sahkandi, S.T">
+          <i class="fa-regular fa-copy"></i> Salin Nomor Rekening
+        </button>
+      </div>
+
+      <div class="atm-card atm-gold" data-reveal>
+        <div class="atm-shine"></div>
+        <div class="atm-top">
+          <span class="atm-bank">BNI</span>
+          <i class="fa-solid fa-wifi atm-wifi"></i>
+        </div>
+        <div class="atm-chip"><i class="fa-solid fa-microchip"></i></div>
+        <div class="atm-number">1417 - 7481 - 95</div>
+        <div class="atm-bottom">
+          <div>
+            <p class="atm-label">Card Holder</p>
+            <p class="atm-name">Ns. Ririn Noviani, S.Kep</p>
+          </div>
+          <i class="fa-brands fa-cc-visa atm-logo"></i>
+        </div>
+        <button class="copy-btn" data-copy="1417748195" data-bank="BNI a.n Ns. Ririn Noviani, S.Kep">
+          <i class="fa-regular fa-copy"></i> Salin Nomor Rekening
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== UCAPAN & DOA ===== -->
+  <section class="section wishes-section" data-theme="black" data-reveal>
+    <div class="section-frame"><span class="sec-corner tl"></span><span class="sec-corner tr"></span><span class="sec-corner bl"></span><span class="sec-corner br"></span></div>
+    <p class="section-eyebrow">RSVP</p>
+    <h2 class="section-title">Ucapan &amp; Doa</h2>
+    <div class="gold-divider"></div>
+
+    <form class="wishes-form" id="wishesForm" data-reveal>
+      <input type="text" id="wishName" placeholder="Nama Anda" required maxlength="50">
+      <select id="wishStatus">
+        <option value="Hadir">Hadir</option>
+        <option value="Tidak Hadir">Tidak Hadir</option>
+        <option value="Ragu-ragu">Ragu-ragu</option>
+      </select>
+      <textarea id="wishMessage" placeholder="Tulis ucapan dan doa terbaik untuk kedua mempelai..." required maxlength="300" rows="3"></textarea>
+      <button type="submit" id="wishSubmit">
+        <i class="fa-solid fa-paper-plane"></i> Kirim Ucapan
+      </button>
+    </form>
+
+    <div class="wishes-list" id="wishesList">
+      <p class="wishes-loading">Memuat ucapan...</p>
+    </div>
+  </section>
+
+  <!-- ===== PENUTUP ===== -->
+  <section class="section closing-section" data-theme="maroon" data-reveal>
+    <div class="section-frame"><span class="sec-corner tl"></span><span class="sec-corner tr"></span><span class="sec-corner bl"></span><span class="sec-corner br"></span></div>
+    <div class="ornament-top"><i class="fa-solid fa-gem"></i></div>
+    <h2 class="closing-title">Terima Kasih</h2>
+    <p class="closing-text">
+      Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
+      berkenan hadir dan memberikan doa restu kepada kami.
+    </p>
+    <p class="closing-signature">Kami yang berbahagia,</p>
+    <h3 class="closing-names">Didi &amp; Ririn</h3>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-emblem"><i class="fa-solid fa-gem"></i></div>
+    <p class="footer-credit">Design by <strong>Zhald_Design</strong></p>
+    <div class="footer-social">
+      <a href="https://instagram.com/rijald_elimanafe" target="_blank" rel="noopener" class="social-btn ig">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+      <a href="https://tiktok.com/@Zhald_Design" target="_blank" rel="noopener" class="social-btn tt">
+        <i class="fa-brands fa-tiktok"></i>
+      </a>
+      <a href="https://wa.me/6281338596854" target="_blank" rel="noopener" class="social-btn wa">
+        <i class="fa-brands fa-whatsapp"></i>
+      </a>
+    </div>
+    <p class="footer-copy">&copy; 2026 — Undangan Digital Didi &amp; Ririn</p>
+  </footer>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
