@@ -75,7 +75,7 @@ a{text-decoration:none;color:inherit;}
   display:flex;
   align-items:center;
   justify-content:center;
-  z-index:9500;
+  z-index:9900;
   box-shadow:0 6px 20px rgba(0,0,0,.5), 0 0 0 3px rgba(201,162,39,.25);
   animation:spin 4s linear infinite;
   animation-play-state:paused;
@@ -84,6 +84,13 @@ a{text-decoration:none;color:inherit;}
 .music-toggle.playing{animation-play-state:running;}
 .music-toggle:active{transform:scale(.9);}
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+/* Isyarat saat autoplay musik diblokir browser — menarik perhatian tamu untuk tap manual */
+.music-toggle.attn{animation:spin 4s linear infinite, attnPulse 1.4s ease-in-out infinite;}
+@keyframes attnPulse{
+  0%,100%{box-shadow:0 6px 20px rgba(0,0,0,.5), 0 0 0 3px rgba(201,162,39,.25);}
+  50%{box-shadow:0 6px 20px rgba(0,0,0,.5), 0 0 0 10px rgba(201,162,39,.35);}
+}
 
 /* =========================================================
    COVER / OPENING SCREEN
