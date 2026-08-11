@@ -35,15 +35,25 @@ const curtain   = document.getElementById('curtain');
 const bgMusic   = document.getElementById('bgMusic');
 const musicToggle = document.getElementById('musicToggle');
 
+function playMusic(){
+  bgMusic.volume = 0.75;
+  return bgMusic.play().then(() => {
+    musicToggle.classList.add('playing');
+    musicToggle.classList.remove('attn');
+  });
+}
+function pauseMusic(){
+  bgMusic.pause();
+  musicToggle.classList.remove('playing');
+}
+
 openBtn.addEventListener('click', () => {
   // Mulai musik (dipicu oleh interaksi user agar lolos autoplay policy browser)
-  bgMusic.volume = 0.75;
-  bgMusic.play().then(() => {
-    musicToggle.classList.add('playing');
-    musicToggle.querySelector('i').classList.remove('fa-play');
-    musicToggle.querySelector('i').classList.add('fa-compact-disc');
-  }).catch(() => {
-    // Jika diblokir browser, tetap lanjutkan tanpa musik
+  playMusic().catch(() => {
+    // Diblokir browser (mis. mode senyap iPhone, izin suara situs di-block, dll).
+    // Beri isyarat visual + info singkat supaya tamu tahu harus tap ikon musik manual.
+    musicToggle.classList.add('attn');
+    showToast('Musik diblokir browser. Tap ikon 💿 di pojok untuk memutar.');
   });
 
   // 1) Cover memudar, menampakkan tirai yang masih tertutup di belakangnya
@@ -65,11 +75,11 @@ openBtn.addEventListener('click', () => {
 
 musicToggle.addEventListener('click', () => {
   if (bgMusic.paused) {
-    bgMusic.play();
-    musicToggle.classList.add('playing');
+    playMusic().catch(() => {
+      showToast('Gagal memutar musik. Coba lagi beberapa saat.');
+    });
   } else {
-    bgMusic.pause();
-    musicToggle.classList.remove('playing');
+    pauseMusic();
   }
 });
 
