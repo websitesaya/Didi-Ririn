@@ -380,20 +380,73 @@ const wishesForm = document.getElementById('wishesForm');
 const wishesList = document.getElementById('wishesList');
 const wishSubmit = document.getElementById('wishSubmit');
 
+const WISHES_CACHE_KEY = 'wishes_cache_' + JSONBIN_BIN_ID;
+const binHeaders = { 'X-Master-Key': JSONBIN_API_KEY, 'X-Bin-Meta': 'false' };
+
+// Ambil data dari JSONBin. WAJIB melempar error kalau gagal (kuota habis, limit, dll),
+// supaya error tidak pernah dianggap "belum ada ucapan".
+async function binGet(){
+  const res = await fetch(`${JSONBIN_BASE_URL}/latest`, { headers: binHeaders, cache: 'no-store' });
+  if (!res.ok) { const e = new Error('HTTP ' + res.status); e.status = res.status; throw e; }
+  const data = await res.json();
+  const wishes = Array.isArray(data) ? data : data.record;
+  if (!Array.isArray(wishes)) throw new Error('Format data tidak valid');
+  return wishes;
+}
+
+function readWishesCache(){
+  try { return JSON.parse(localStorage.getItem(WISHES_CACHE_KEY) || 'null'); } catch(e){ return null; }
+}
+function saveWishesCache(w){
+  try { localStorage.setItem(WISHES_CACHE_KEY, JSON.stringify(w)); } catch(e){}
+}
+
+// Cadangan statis: file ucapan.json di folder yang sama (disimpan di GitHub, tanpa kuota)
+async function loadStaticWishes(){
+  try {
+    const r = await fetch('ucapan.json?t=' + Date.now(), { cache: 'no-store' });
+    if (!r.ok) return [];
+    const d = await r.json();
+    return Array.isArray(d) ? d : [];
+  } catch (e) { return []; }
+}
+
+// Gabungkan beberapa daftar ucapan tanpa duplikat, urut dari yang terlama
+function mergeWishes(...lists){
+  const map = new Map();
+  lists.forEach(list => (list || []).forEach(w => {
+    if (!w) return;
+    const key = (w.time || '') + '|' + (w.name || '') + '|' + (w.message || '');
+    if (!map.has(key)) map.set(key, w);
+  }));
+  return [...map.values()].sort((a, b) => String(a.time || '').localeCompare(String(b.time || '')));
+}
+
+const DEBUG_WISHES = new URLSearchParams(location.search).has('debug');
+
 async function fetchWishes(){
   if (JSONBIN_BIN_ID.includes('ISI_')) {
     wishesList.innerHTML = `<p class="wishes-empty">Ucapan belum aktif. Admin perlu mengisi JSONBIN_BIN_ID &amp; JSONBIN_API_KEY pada script.js.</p>`;
     return;
   }
   try {
-    const res = await fetch(`${JSONBIN_BASE_URL}/latest`, {
-      headers: { 'X-Master-Key': JSONBIN_API_KEY, 'X-Bin-Meta': 'false' }
-    });
-    const data = await res.json();
-    const wishes = Array.isArray(data) ? data : (data.record || []);
+    const [live, snapshot] = await Promise.all([binGet(), loadStaticWishes()]);
+    const wishes = mergeWishes(snapshot, live);
+    saveWishesCache(wishes);
     renderWishes(wishes);
   } catch (err) {
-    wishesList.innerHTML = `<p class="wishes-empty">Gagal memuat ucapan. Silakan refresh halaman.</p>`;
+    console.error('Gagal memuat ucapan:', err);
+    const snapshot = await loadStaticWishes();
+    const merged = mergeWishes(snapshot, readWishesCache());
+    if (merged.length) {
+      renderWishes(merged);
+    } else {
+      wishesList.innerHTML = `<p class="wishes-empty">Ucapan belum bisa dimuat saat ini. Silakan refresh beberapa saat lagi.</p>`;
+    }
+    if (DEBUG_WISHES) {
+      wishesList.insertAdjacentHTML('afterbegin',
+        `<p class="wishes-empty">[debug] JSONBin gagal: ${escapeHTML(String(err.message || err))}</p>`);
+    }
   }
 }
 
@@ -442,25 +495,28 @@ wishesForm.addEventListener('submit', async (e) => {
   wishSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim...';
 
   try {
-    const getRes = await fetch(`${JSONBIN_BASE_URL}/latest`, {
-      headers: { 'X-Master-Key': JSONBIN_API_KEY, 'X-Bin-Meta': 'false' }
-    });
-    const existing = await getRes.json();
-    const wishes = Array.isArray(existing) ? existing : (existing.record || []);
+    // 1) Baca data terbaru. Kalau gagal, BERHENTI — jangan menimpa data lama.
+    const live = await binGet();
+    const snapshot = await loadStaticWishes();
+    const wishes = mergeWishes(snapshot, live);
 
     wishes.push({ name, status, message, time: new Date().toISOString() });
 
-    await fetch(JSONBIN_BASE_URL, {
+    // 2) Simpan, dan pastikan benar-benar berhasil
+    const putRes = await fetch(JSONBIN_BASE_URL, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_API_KEY },
       body: JSON.stringify(wishes)
     });
+    if (!putRes.ok) throw new Error('HTTP ' + putRes.status);
 
+    saveWishesCache(wishes);
     renderWishes(wishes);
     wishesForm.reset();
     showToast('Terima kasih atas ucapan & doanya 🤍');
   } catch (err) {
-    showToast('Gagal mengirim ucapan, coba lagi.');
+    console.error(err);
+    showToast('Ucapan belum terkirim, silakan coba lagi sebentar lagi.');
   } finally {
     wishSubmit.disabled = false;
     wishSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Ucapan';
