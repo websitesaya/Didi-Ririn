@@ -8,8 +8,8 @@
    2. Buat "Bin" baru berisi array kosong:  []
    3. Salin BIN ID dan X-MASTER-KEY ke bawah ini.
    ============================================================ */
-const JSONBIN_BIN_ID   = "6a7ab399da38895dfed41fea";
-const JSONBIN_API_KEY  = "$2a$10$nou5c3yZntdxwBqnGEEOvuCkZpg9GT4CfSp1IXgNhJpKQzhxI8NYO";
+const JSONBIN_BIN_ID   = "6b090c0d3957a11c13b5f036";
+const JSONBIN_API_KEY  = "$2a$10$RmuReRgEUKMKTcr12LCKWOu3Gs1SNcMcPAZdxwX1Uvdc.RCIDPQlG";
 const JSONBIN_BASE_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
 
 const TOTAL_PHOTOS = 20; // Foto1.jpg s/d Foto20.jpg
